@@ -1,0 +1,371 @@
+<title>MM Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#F6F8F5; --surface:#FFFFFF; --raise:#FBFCFA;
+    --ink:#13181A; --muted:#586460; --faint:#8B938D;
+    --line:#E2E7E0; --line-2:#EDF0EA;
+    --accent:#0E6E5C; --accent-2:#0A5748; --on-accent:#F6F8F5;
+    --crit:#B3261E; --high:#C2410C; --med:#B45309; --low:#5B6770;
+    --shadow:0 1px 2px rgba(19,24,26,.04), 0 8px 30px rgba(19,24,26,.05);
+    --maxw:1080px;
+    --f-disp:"Archivo",system-ui,sans-serif;
+    --f-body:"Hanken Grotesk",system-ui,sans-serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+  }
+  :root:not([data-theme="light"]){}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0E1213; --surface:#151B1C; --raise:#12191A;
+      --ink:#EBEFEA; --muted:#9AA49E; --faint:#6B756E;
+      --line:#242B2B; --line-2:#1C2323;
+      --accent:#40C1A5; --accent-2:#5FD3BA; --on-accent:#0B1211;
+      --crit:#F0716A; --high:#F0975B; --med:#E4B24A; --low:#96A0A3;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1213; --surface:#151B1C; --raise:#12191A;
+    --ink:#EBEFEA; --muted:#9AA49E; --faint:#6B756E;
+    --line:#242B2B; --line-2:#1C2323;
+    --accent:#40C1A5; --accent-2:#5FD3BA; --on-accent:#0B1211;
+    --crit:#F0716A; --high:#F0975B; --med:#E4B24A; --low:#96A0A3;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);font-family:var(--f-body);
+    line-height:1.62;-webkit-font-smoothing:antialiased;letter-spacing:.002em}
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(20px,5vw,40px)}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{margin:0;font-family:var(--f-disp);text-wrap:balance;letter-spacing:-.02em;line-height:1.05}
+  p{margin:0}
+  .mono{font-family:var(--f-mono)}
+  .eyebrow{font-family:var(--f-mono);font-size:.72rem;font-weight:500;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent-2)}
+  .kicker{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .lead{font-size:clamp(1.02rem,1.5vw,1.18rem);color:var(--muted);max-width:60ch}
+
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 86%,transparent);
+    backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding-block:14px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-weight:500;
+    letter-spacing:.02em;font-size:.92rem}
+  .brand .dot{width:11px;height:11px;border:2px solid var(--accent);border-radius:50%;
+    display:inline-block;position:relative}
+  .brand .dot::after{content:"";position:absolute;inset:2px;background:var(--accent);border-radius:50%;
+    transform:scale(.55)}
+  .nav-links{display:flex;gap:26px;align-items:center;font-family:var(--f-mono);font-size:.8rem;
+    letter-spacing:.03em}
+  .nav-links a{color:var(--muted)}
+  .nav-links a:hover{color:var(--accent-2)}
+  .nav-links a.cta{color:var(--accent-2)}
+  @media(max-width:620px){.nav-links a:not(.cta){display:none}}
+
+  /* hero */
+  .hero{padding-block:clamp(56px,10vw,104px) clamp(40px,7vw,72px);border-bottom:1px solid var(--line)}
+  .hero h1{font-weight:800;font-size:clamp(2.5rem,6.4vw,4.5rem);margin:20px 0 0;max-width:16ch}
+  .hero .accent-word{color:var(--accent)}
+  .hero .lead{margin-top:26px}
+  .statusline{margin-top:30px;font-family:var(--f-mono);font-size:.78rem;color:var(--faint);
+    display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+  .statusline b{color:var(--accent-2);font-weight:500}
+  .statusline .sep{color:var(--line);}
+  .cta-row{margin-top:36px;display:flex;flex-wrap:wrap;gap:14px}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:.82rem;
+    letter-spacing:.02em;padding:13px 20px;border-radius:2px;border:1px solid var(--line);
+    color:var(--ink);background:var(--surface);transition:border-color .15s,transform .15s,color .15s}
+  .btn .arw{color:var(--accent);transition:transform .15s}
+  .btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .btn:hover .arw{transform:translate(3px,-1px)}
+  .btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+  .btn.primary .arw{color:var(--on-accent)}
+  .btn.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
+
+  /* signals */
+  .signals{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border-block:1px solid var(--line);margin-top:0}
+  .signal{background:var(--ground);padding:26px clamp(16px,2.4vw,26px)}
+  .signal .n{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.14em;color:var(--faint);text-transform:uppercase}
+  .signal .t{margin-top:12px;font-family:var(--f-disp);font-weight:700;font-size:1.04rem;letter-spacing:-.01em}
+  .signal .d{margin-top:7px;font-size:.9rem;color:var(--muted);line-height:1.5}
+  @media(max-width:760px){.signals{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:420px){.signals{grid-template-columns:1fr}}
+
+  section{padding-block:clamp(52px,8vw,88px);border-bottom:1px solid var(--line)}
+  .sec-head{display:grid;grid-template-columns:200px 1fr;gap:clamp(20px,4vw,48px);align-items:start}
+  .sec-head .rail{position:sticky;top:84px}
+  .sec-head h2{font-weight:700;font-size:clamp(1.5rem,3.1vw,2.15rem);margin-top:12px}
+  .sec-head .rail p{margin-top:14px;font-size:.86rem;color:var(--muted);max-width:24ch}
+  @media(max-width:820px){.sec-head{grid-template-columns:1fr}.sec-head .rail{position:static}}
+
+  /* capabilities spec table */
+  .spec{margin-top:8px;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--surface)}
+  .spec-row{display:grid;grid-template-columns:1.1fr 2fr auto;gap:18px;align-items:center;
+    padding:18px clamp(16px,2.2vw,24px);border-bottom:1px solid var(--line-2)}
+  .spec-row:last-child{border-bottom:0}
+  .spec-row:hover{background:var(--raise)}
+  .spec-row .cls{font-family:var(--f-disp);font-weight:700;font-size:1.02rem;letter-spacing:-.01em}
+  .spec-row .cls .sub{display:block;font-family:var(--f-mono);font-weight:400;font-size:.68rem;
+    letter-spacing:.08em;color:var(--faint);text-transform:uppercase;margin-top:5px}
+  .spec-row .desc{color:var(--muted);font-size:.94rem;line-height:1.5}
+  .band{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:5px 9px;border-radius:2px;white-space:nowrap;border:1px solid currentColor}
+  .band.crit{color:var(--crit)} .band.high{color:var(--high)}
+  .band.med{color:var(--med)} .band.low{color:var(--low)}
+  @media(max-width:640px){
+    .spec-row{grid-template-columns:1fr auto;gap:10px}
+    .spec-row .desc{grid-column:1/-1}
+  }
+
+  /* method pipeline */
+  .pipe{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .step{background:var(--surface);padding:22px clamp(16px,2.2vw,24px);display:grid;
+    grid-template-columns:auto 1fr;gap:18px;align-items:baseline}
+  .step .idx{font-family:var(--f-mono);font-size:.72rem;color:var(--accent);letter-spacing:.1em}
+  .step h3{font-size:1.05rem;font-weight:700}
+  .step p{margin-top:7px;color:var(--muted);font-size:.94rem;line-height:1.55;max-width:64ch}
+  .step .gate{font-family:var(--f-mono);font-size:.66rem;color:var(--faint);letter-spacing:.06em;
+    text-transform:uppercase;margin-top:9px;display:inline-block;border-top:1px dashed var(--line);padding-top:8px}
+
+  /* principles */
+  .princ{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .princ .p{background:var(--surface);padding:24px clamp(16px,2.2vw,24px)}
+  .princ .p h3{font-size:1rem;font-weight:700;display:flex;gap:10px;align-items:center}
+  .princ .p h3 .m{font-family:var(--f-mono);color:var(--accent);font-size:.8rem}
+  .princ .p p{margin-top:10px;color:var(--muted);font-size:.92rem;line-height:1.55}
+  @media(max-width:640px){.princ{grid-template-columns:1fr}}
+
+  /* proof / repo */
+  .repo{border:1px solid var(--line);border-radius:3px;background:var(--surface);overflow:hidden}
+  .repo-top{padding:22px clamp(18px,2.4vw,26px);border-bottom:1px solid var(--line-2);
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .repo-top .path{font-family:var(--f-mono);font-size:.9rem}
+  .repo-top .path .host{color:var(--faint)}
+  .repo-top .path .name{color:var(--accent-2)}
+  .repo-body{padding:22px clamp(18px,2.4vw,26px)}
+  .repo-body p{color:var(--muted);max-width:66ch}
+  .repo-list{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line-2);border:1px solid var(--line-2);border-radius:2px;overflow:hidden}
+  .repo-list .it{background:var(--surface);padding:16px}
+  .repo-list .it .k{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-2)}
+  .repo-list .it .v{margin-top:8px;font-size:.9rem;color:var(--muted);line-height:1.45}
+  @media(max-width:640px){.repo-list{grid-template-columns:1fr}}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .contact-grid a,.contact-grid .row{background:var(--surface);padding:22px clamp(16px,2.2vw,24px);
+    display:block;transition:background .15s}
+  .contact-grid a:hover{background:var(--raise)}
+  .contact-grid .k{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .contact-grid .v{margin-top:9px;font-family:var(--f-disp);font-weight:700;font-size:1.02rem;letter-spacing:-.01em;overflow-wrap:anywhere}
+  .contact-grid a:hover .v{color:var(--accent-2)}
+  .ph{color:var(--faint);border-bottom:1px dotted var(--faint)}
+  @media(max-width:560px){.contact-grid{grid-template-columns:1fr}}
+
+  footer{padding-block:40px 56px}
+  .foot-in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-family:var(--f-mono);font-size:.74rem;color:var(--faint);letter-spacing:.03em}
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="dot"></span> MM&nbsp;Research</a>
+    <nav class="nav-links">
+      <a href="#hunt">Focus</a>
+      <a href="#method">Method</a>
+      <a href="#proof">Proof of work</a>
+      <a class="cta" href="#contact">Contact&nbsp;→</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="border-bottom:0">
+    <div class="wrap">
+      <p class="eyebrow">Application Security · Bug Bounty</p>
+      <h1>I find the <span class="accent-word">access-control</span> and business-logic bugs scanners walk past.</h1>
+      <p class="lead">Independent security researcher. I hunt high-impact vulnerabilities in web and API platforms — broken authorization, authentication, and business logic — and report them under coordinated disclosure with reproducible, materialized proof.</p>
+      <div class="statusline">
+        <span><b>scope-bound</b></span><span class="sep">/</span>
+        <span><b>coordinated disclosure</b></span><span class="sep">/</span>
+        <span><b>proof-driven</b></span><span class="sep">/</span>
+        <span><b>no PII, no secrets</b></span>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="https://github.com/mateusmattosmelo-tech/security-research" target="_blank" rel="noopener">View the work <span class="arw">→</span></a>
+        <a class="btn" href="#contact">Get in touch <span class="arw">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="signals">
+    <div class="signal"><div class="n">01 / Focus</div><div class="t">Authorization &amp; logic</div><div class="d">Where mature targets actually break — not the surface a scanner already covered.</div></div>
+    <div class="signal"><div class="n">02 / Proof</div><div class="t">Materialized impact</div><div class="d">Every report shows the impact crossing a real resource, with positive and negative controls.</div></div>
+    <div class="signal"><div class="n">03 / Conduct</div><div class="t">In-scope, always</div><div class="d">Program policy is the fence. No brute force, no DoS, no third-party data.</div></div>
+    <div class="signal"><div class="n">04 / Open</div><div class="t">Public methodology</div><div class="d">Playbooks, tooling, and technique deep-dives published in the open.</div></div>
+  </div></div>
+
+  <section id="hunt">
+    <div class="wrap sec-head">
+      <div class="rail">
+        <p class="eyebrow">What I hunt</p>
+        <p>Classes I go deep on, with the severity band each typically lands in when materialized.</p>
+      </div>
+      <div>
+        <div class="spec">
+          <div class="spec-row">
+            <div class="cls">Broken access control<span class="sub">IDOR · BOLA · privesc</span></div>
+            <div class="desc">Object and function-level authorization that trusts a client-supplied identifier — proven with two accounts and real cross-account data.</div>
+            <div class="band crit">High–Critical</div>
+          </div>
+          <div class="spec-row">
+            <div class="cls">Authentication<span class="sub">OAuth · OIDC · JWT · SAML</span></div>
+            <div class="desc">redirect_uri validation, token verification, algorithm confusion, signature-wrapping, session and step-up handling.</div>
+            <div class="band crit">High–Critical</div>
+          </div>
+          <div class="spec-row">
+            <div class="cls">Multi-tenant isolation<span class="sub">cross-tenant access</span></div>
+            <div class="desc">The tenant boundary on SaaS and data platforms — the highest-value property a shared system has to keep.</div>
+            <div class="band crit">Critical</div>
+          </div>
+          <div class="spec-row">
+            <div class="cls">Business &amp; payment logic<span class="sub">state machines · money</span></div>
+            <div class="desc">Client-trusted values, skippable steps, race conditions, and refund/coupon flows that move real money.</div>
+            <div class="band high">Medium–High</div>
+          </div>
+          <div class="spec-row">
+            <div class="cls">API &amp; GraphQL<span class="sub">REST · resolvers</span></div>
+            <div class="desc">Mass assignment, resolver-level authorization, batching abuse, and unlinked surface the UI never calls.</div>
+            <div class="band high">High</div>
+          </div>
+          <div class="spec-row">
+            <div class="cls">Server-side &amp; injection<span class="sub">SSRF · SSTI · deserialization</span></div>
+            <div class="desc">Sinks that reach the network position or the host — confirmed out-of-band, escalated to concrete impact.</div>
+            <div class="band crit">High–Critical</div>
+          </div>
+          <div class="spec-row">
+            <div class="cls">Mobile<span class="sub">Android · iOS</span></div>
+            <div class="desc">Exported components, deeplinks, WebView bridges, and the backend the app maps out.</div>
+            <div class="band high">Medium–High</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="method">
+    <div class="wrap sec-head">
+      <div class="rail">
+        <p class="eyebrow">How I work</p>
+        <p>A repeatable pipeline. The surface decides what gets tested — not a preconceived class.</p>
+      </div>
+      <div>
+        <div class="pipe">
+          <div class="step"><div class="idx">P·1</div><div>
+            <h3>Recon that never closes</h3>
+            <p>Passive discovery, JS bundles, mobile artifacts, and a target's own open source. Every new surface goes back on the map and re-derives what's worth testing.</p>
+            <span class="gate">gate — the map explains every test</span>
+          </div></div>
+          <div class="step"><div class="idx">P·2</div><div>
+            <h3>Coverage, then focused depth</h3>
+            <p>Cover the breadth first; then chase one anomaly at a time to a candidate or a documented refutation. Depth never blocks breadth.</p>
+            <span class="gate">gate — every anomaly resolved</span>
+          </div></div>
+          <div class="step"><div class="idx">P·3</div><div>
+            <h3>Materialize the impact</h3>
+            <p>A mechanism isn't a finding. The consequence is crossed on accounts I own, captured live, with positive and negative controls — re-verified at the moment of report.</p>
+            <span class="gate">gate — impact crossed, not asserted</span>
+          </div></div>
+          <div class="step"><div class="idx">P·4</div><div>
+            <h3>Reproduce blind, then triage hostile</h3>
+            <p>The steps are run from scratch by someone who wasn't there, then reviewed adversarially — before anything is written up. It reproduces on the first try, or it isn't ready.</p>
+            <span class="gate">gate — survives a skeptic</span>
+          </div></div>
+          <div class="step"><div class="idx">P·5</div><div>
+            <h3>Report for the decision</h3>
+            <p>Consequence over mechanism, the evidence where the doubt is, severity charged to what a byte supports. Coordinated disclosure, secrets masked, conduct declared.</p>
+            <span class="gate">gate — no point left to believe on faith</span>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="principles">
+    <div class="wrap sec-head">
+      <div class="rail">
+        <p class="eyebrow">Principles</p>
+        <p>The discipline that makes a finding a paid, repeatable relationship.</p>
+      </div>
+      <div>
+        <div class="princ">
+          <div class="p"><h3><span class="m">01</span> Authorized only</h3><p>Public and private bug-bounty programs, CTFs, labs, and systems I own. Scope and rules are read before a single request leaves my machine.</p></div>
+          <div class="p"><h3><span class="m">02</span> Coordinated disclosure</h3><p>Details stay private until fixed and permitted. Only sanitized methodology is ever published.</p></div>
+          <div class="p"><h3><span class="m">03</span> Real impact, no inflation</h3><p>I charge the highest severity the evidence supports — and not a point more. Unproven ceilings stay out of the report.</p></div>
+          <div class="p"><h3><span class="m">04</span> Nothing hazardous</h3><p>No brute force, enumeration, denial of service, or touching another person's data. Two accounts I own prove cross-account access.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="wrap sec-head">
+      <div class="rail">
+        <p class="eyebrow">Proof of work</p>
+        <p>Open, verifiable, and updated as the craft evolves.</p>
+      </div>
+      <div>
+        <div class="repo">
+          <div class="repo-top">
+            <div class="path"><span class="host">github.com/</span><span class="name">mateusmattosmelo-tech/security-research</span></div>
+            <a class="btn" href="https://github.com/mateusmattosmelo-tech/security-research" target="_blank" rel="noopener">Open repository <span class="arw">→</span></a>
+          </div>
+          <div class="repo-body">
+            <p>A working library of how I actually operate — the same method and tooling I bring to every engagement, written in the open so the work speaks for itself.</p>
+            <div class="repo-list">
+              <div class="it"><div class="k">Methodology</div><div class="v">Reusable playbooks: recon, authorization testing, API &amp; OAuth, multi-tenant isolation, scope and disclosure hygiene, report writing.</div></div>
+              <div class="it"><div class="k">Deep-dives</div><div class="v">Byte-level technique breakdowns across the modern web attack surface — the <em>why it works</em> and how to fix it.</div></div>
+              <div class="it"><div class="k">Tooling</div><div class="v">Small, self-contained scripts for recon, subdomain-takeover checks, OAuth &amp; CSP testing, and evidence packaging.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="border-bottom:0">
+    <div class="wrap sec-head">
+      <div class="rail">
+        <p class="eyebrow">Work with me</p>
+        <p>Open to private program invitations, engagements, and coordinated disclosure.</p>
+      </div>
+      <div>
+        <div class="contact-grid">
+          <a href="https://github.com/mateusmattosmelo-tech/security-research" target="_blank" rel="noopener">
+            <div class="k">GitHub</div><div class="v">mateusmattosmelo-tech →</div></a>
+          <a href="mailto:mateusmattosmelo@gmail.com">
+            <div class="k">Email</div><div class="v">mateusmattosmelo@gmail.com →</div></a>
+          <div class="row">
+            <div class="k">Based in</div><div class="v">Belo Horizonte, Brazil</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>MM Research — application security &amp; bug bounty</span>
+    <span>Coordinated disclosure · authorized testing only</span>
+  </div>
+</footer>
